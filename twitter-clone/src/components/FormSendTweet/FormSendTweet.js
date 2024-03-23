@@ -1,16 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FormSendTweet.scss';
 
 //Libraries import
 import { FormControl, FormGroup, TextField, Button } from '@mui/material';
 
 export default function FromSendTweet(props) {
-	const {} = props;
+	const { SendTweet } = props;
+	//useState para almacenar la información cuando se envía un tweet
+	const [formValue, setFormValue] = useState({
+		name: '',
+		tweet: '',
+	});
+
+	/* onFormChange
+	 * Funcion para creacion de tweets y los guarda en los componentes.
+	 *
+	 *  */
+	const onFormChange = (event) => {
+		setFormValue({
+			// los tres puntos cargan todos los todos los props del objecto.
+			...formValue,
+			[event.target.name]: event.target.value,
+		});
+	};
 
 	return (
 		<div className='form-send-tweet'>
-			<h2 className='from-send-tweet__enviar-tweet'>Enviar Tweet</h2>
-			<form className='form-send-tweet__from'>
+			<h2 className='from-send-tweet__title'>Enviar Tweet</h2>
+			<form
+				className='form-send-tweet__from'
+				onSubmit={(event) => SendTweet(event, formValue)}
+				onChange={onFormChange}
+			>
 				<FormControl>
 					<FormGroup>
 						<TextField
