@@ -15,19 +15,23 @@ function App() {
 		text: null,
 	});
 
+	//App.js useStates
 	const [allTweets, setAllTweets] = useState([]);
+	const [reloadTweets, setReloadTweets] = useState(false);
 
+	//allTweets useState:
 	useEffect(() => {
 		const allTweetsStorage = localStorage.getItem(TWEETS_STORAGE);
 		const allTweetsArray = JSON.parse(allTweetsStorage);
-
 		setAllTweets(allTweetsArray);
-	}, []);
+		setReloadTweets(false);
+	}, [reloadTweets]);
 
 	const deleteTweet = (index) => {
 		allTweets.splice(index, 1);
 		setAllTweets(allTweets);
-		localStorage.setItem(TWEETS_STORAGE, allTweets);
+		localStorage.setItem(TWEETS_STORAGE, JSON.stringify(allTweets));
+		setReloadTweets(true);
 	};
 
 	return (
